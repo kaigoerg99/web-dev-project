@@ -15,8 +15,10 @@ function Navbar() {
     }, [searchTerm]);
 
     const searchMovie = async () => {
-        navigate(`/search/${search}`);
-        setSearch('')
+        if (search) {
+            navigate(`/search/${search}`);
+            setSearch('')
+        }
     }
 
     return (
