@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { searchAPI } from "../API/service";
+import { searchAPI } from "../../imdb/service";
 
 const Search = () => {
     const { searchTerm } = useParams();
