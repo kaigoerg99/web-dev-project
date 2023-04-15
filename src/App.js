@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import {Routes, Route} from "react-router";
 import Navbar from './components/Navbar/Navbar';
 import Home from './components/Home/Home';
+import Search from './components/Search/Search';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Navbar/>
         <Routes>
           <Route index element={<Home/>}/>
+          <Route path='/search/:searchTerm' element={<Search/>}/>
         </Routes>
         
       </div>

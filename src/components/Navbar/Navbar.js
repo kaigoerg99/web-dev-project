@@ -1,8 +1,24 @@
-import {Link} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import {Link, useParams} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import NavbarLink from "./Navbar-link";
 
 function Navbar() {
-    // TODO: Make links into one reusable component
+    const { searchTerm } = useParams();
+    const navigate = useNavigate();
+    const [search, setSearch] = useState(searchTerm);
+
+    useEffect(() => {
+        if (searchTerm) {
+            setSearch(searchTerm);
+        }
+    }, [searchTerm]);
+
+    const searchMovie = async () => {
+        navigate(`/search/${search}`);
+        setSearch('')
+    }
+
     return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light pv-2 px-4 d-flex flex-row justify-content-between">
         <Link to="/" className="navbar-brand" style={{'font-size': '50px'}}>
@@ -11,8 +27,10 @@ function Navbar() {
         </Link>
 
         <div class="input-group w-50">
-            <input type="search" class="form-control py-2" placeholder="Search for Movies"/>
-            <button type="button" class="btn btn-outline-dark"><i class="bi bi-search"></i></button>
+            <input type="text" class="form-control py-2" placeholder="Search for Movies" value={search} onChange={(e) => setSearch(e.target.value)}/>
+            <button class="btn btn-outline-dark" onClick={searchMovie}>
+                <i class="bi bi-search"></i>
+            </button>
         </div>
         
         <div className="d-flex flex-row" >
