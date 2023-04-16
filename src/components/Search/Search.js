@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { searchAPI } from "../../imdb/service";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { searchMovie } from "../../imdb/service";
 
 const Search = () => {
     const { searchTerm } = useParams();
+    const navigate = useNavigate();
     const [results, setResults] = useState([]);
 
     useEffect(() => {
@@ -13,8 +14,11 @@ const Search = () => {
     }, [searchTerm]);
 
     const getResults = async () => {
-        const res = await searchAPI(searchTerm);
+        const res = await searchMovie(searchTerm);
         setResults(res.data.results);
+        if (res.data.results.length === 0) {
+            navigate('/search');
+        }
     }
 
     return (
@@ -27,9 +31,11 @@ const Search = () => {
                             {results.map((result) => {
                                 return (
                                     <td>
-                                        <img src={result.image} alt="" width={300} height={300}/>
-                                        <br/>
-                                        <p className="h4">{result.title}</p>
+                                        <Link to={`/details/${result.id}`}>
+                                            <img src={result.image} alt="" width={300} height={300}/>
+                                            <br/>
+                                            <p className="h4">{result.title}</p>
+                                        </Link>
                                     </td>
                                 );
                             })}
