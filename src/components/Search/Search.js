@@ -24,15 +24,15 @@ const Search = () => {
     return (
         <>
             <p className="lead">Search results for {searchTerm}</p>
-            <div className="row" >
+            <div className="row " >
                 {results.map((result) => {
                     return (
                         <div className="col">
                             <div className="card m-2" style={{"width": "300px", "height": "450px"}}>
                                 <img className="card-img-top" src={result.image} alt="" width={300} height={300}/>
                                 <div className="card-body">
-                                    <h5 class="card-title">{result.title}</h5>
-                                    <p class="card-text">{result.description}</p>
+                                    <h5 className="card-title">{result.title}</h5>
+                                    <p className="card-text">{result.description}</p>
                                     <Link className="card-link" to={`/details/${result.id}`}>View details</Link>
                                 </div>
                             </div>

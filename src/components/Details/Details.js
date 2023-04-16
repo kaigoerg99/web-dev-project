@@ -18,28 +18,30 @@ const Details = () => {
         setMovie(res.data);
     }
     return (
-        <div>
-            <h1>{movie.title}</h1>
-            {/* {currentUser && (
-                <button
-                onClick={() => {
-                    likeAlbum({ name: album.name, albumId: album.id });
-                }}
-                className="btn btn-warning"
-                >
-                Like
-                </button>
-            )} */}
-            <br />
-            <img alt="" src={movie.image} height={300} width={300}/>
-            {/* {currentUser && (
-                <>
-                <h2>Review this album</h2>
-                <textarea className="form-control"></textarea>
-                <button className="btn btn-primary">Submit</button>
-                </>
-            )} */}
-            <h2>Actors</h2>
+        <div className="container">
+            <h1 className="display-4">{movie.fullTitle}</h1>
+            <h6 className="mb-1">{movie.plot}</h6>
+            <div className="row">
+                <div className="col">
+                    <img alt="" src={movie.image} style={{"maxWidth": 400}}/>
+                </div>
+                <dl className="col row">
+                    <dt className="col-sm-3">Content Rating</dt>
+                    <dd className="col-sm-9">{movie.contentRating}</dd>
+                    <dt className="col-sm-3">Directors</dt>
+                    <dd className="col-sm-9">{movie.directors}</dd>
+                    <dt className="col-sm-3">Genres</dt>
+                    <dd className="col-sm-9">{movie.genres}</dd>
+                    <dt className="col-sm-3">IMDB Rating</dt>
+                    <dd className="col-sm-9">{movie.imDbRating}</dd>
+                    <dt className="col-sm-3">Release Date</dt>
+                    <dd className="col-sm-9">{movie.releaseDate}</dd>
+                    <dt className="col-sm-3">Run Time</dt>
+                    <dd className="col-sm-9">{movie.runtimeStr}</dd>
+                    <dt className="col-sm-3">Stars</dt>
+                    <dd className="col-sm-9">{movie.stars}</dd>
+                </dl>
+            </div>
         </div>
     )
 }

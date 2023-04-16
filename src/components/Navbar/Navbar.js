@@ -24,14 +24,14 @@ function Navbar() {
     return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light pv-2 px-4 d-flex flex-row justify-content-between">
         <Link to="/" className="navbar-brand" style={{'font-size': '50px'}}>
-            <i class="bi bi-film me-2" ></i>
-            <span class="navbar-text text-dark">MOVIES.COM</span>
+            <i className="bi bi-film me-2" ></i>
+            <span className="navbar-text text-dark">MOVIES.COM</span>
         </Link>
 
-        <div class="input-group w-50">
-            <input type="text" class="form-control py-2" placeholder="Search for Movies" value={search} onChange={(e) => setSearch(e.target.value)}/>
-            <button class="btn btn-outline-dark" onClick={searchMovie}>
-                <i class="bi bi-search"></i>
+        <div className="input-group w-50">
+            <input type="text" className="form-control py-2" placeholder="Search for Movies" value={search} onChange={(e) => setSearch(e.target.value)}/>
+            <button className="btn btn-outline-dark" onClick={searchMovie}>
+                <i className="bi bi-search"></i>
             </button>
         </div>
         
