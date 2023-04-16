@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { searchAPI } from "../../imdb/service";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { searchMovie } from "../../imdb/service";
 
 const Search = () => {
     const { searchTerm } = useParams();
+    const navigate = useNavigate();
     const [results, setResults] = useState([]);
 
     useEffect(() => {
@@ -13,29 +14,31 @@ const Search = () => {
     }, [searchTerm]);
 
     const getResults = async () => {
-        const res = await searchAPI(searchTerm);
+        const res = await searchMovie(searchTerm);
         setResults(res.data.results);
+        if (res.data.results.length === 0) {
+            navigate('/search');
+        }
     }
 
     return (
         <>
             <p className="lead">Search results for {searchTerm}</p>
-            <div className="table-responsive">
-                <table className="table">
-                    <tbody>
-                        <tr>
-                            {results.map((result) => {
-                                return (
-                                    <td>
-                                        <img src={result.image} alt="" width={300} height={300}/>
-                                        <br/>
-                                        <p className="h4">{result.title}</p>
-                                    </td>
-                                );
-                            })}
-                        </tr>
-                    </tbody>
-                </table>
+            <div className="row " >
+                {results.map((result) => {
+                    return (
+                        <div className="col">
+                            <div className="card m-2" style={{"width": "300px", "height": "480px"}}>
+                                <img className="card-img-top" src={result.image} alt="" width={300} height={300}/>
+                                <div className="card-body">
+                                    <h5 className="card-title">{result.title}</h5>
+                                    <p className="card-text">{result.description}</p>
+                                    <Link className="card-link" to={`/details/${result.id}`}>View details</Link>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
         </>
     )
