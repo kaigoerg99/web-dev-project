@@ -24,24 +24,21 @@ const Search = () => {
     return (
         <>
             <p className="lead">Search results for {searchTerm}</p>
-            <div className="table-responsive">
-                <table className="table">
-                    <tbody>
-                        <tr>
-                            {results.map((result) => {
-                                return (
-                                    <td>
-                                        <Link to={`/details/${result.id}`}>
-                                            <img src={result.image} alt="" width={300} height={300}/>
-                                            <br/>
-                                            <p className="h4">{result.title}</p>
-                                        </Link>
-                                    </td>
-                                );
-                            })}
-                        </tr>
-                    </tbody>
-                </table>
+            <div className="row" >
+                {results.map((result) => {
+                    return (
+                        <div className="col">
+                            <div className="card m-2" style={{"width": "300px", "height": "450px"}}>
+                                <img className="card-img-top" src={result.image} alt="" width={300} height={300}/>
+                                <div className="card-body">
+                                    <h5 class="card-title">{result.title}</h5>
+                                    <p class="card-text">{result.description}</p>
+                                    <Link className="card-link" to={`/details/${result.id}`}>View details</Link>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
         </>
     )
