@@ -14,32 +14,33 @@ const Details = () => {
 
     const getMoviData = async () => {
         const res = await getMovie(id);
-        console.log(res);
         setMovie(res.data);
     }
     return (
         <div className="container">
             <h1 className="display-4">{movie.fullTitle}</h1>
-            <h6 className="mb-1">{movie.plot}</h6>
+            <div className="my-5"><h6 className="text-start">{movie.plot}</h6></div>
             <div className="row">
                 <div className="col">
                     <img alt="" src={movie.image} style={{"maxWidth": 400}}/>
                 </div>
                 <dl className="col row">
-                    <dt className="col-sm-3">Content Rating</dt>
-                    <dd className="col-sm-9">{movie.contentRating}</dd>
-                    <dt className="col-sm-3">Directors</dt>
-                    <dd className="col-sm-9">{movie.directors}</dd>
-                    <dt className="col-sm-3">Genres</dt>
-                    <dd className="col-sm-9">{movie.genres}</dd>
-                    <dt className="col-sm-3">IMDB Rating</dt>
-                    <dd className="col-sm-9">{movie.imDbRating}</dd>
-                    <dt className="col-sm-3">Release Date</dt>
-                    <dd className="col-sm-9">{movie.releaseDate}</dd>
-                    <dt className="col-sm-3">Run Time</dt>
-                    <dd className="col-sm-9">{movie.runtimeStr}</dd>
-                    <dt className="col-sm-3">Stars</dt>
-                    <dd className="col-sm-9">{movie.stars}</dd>
+                    <dt className="col-sm-3"><p className="text-start">Content Rating</p></dt>
+                    <dd className="col-sm-9"><p className="text-start">{movie.contentRating}</p></dd>
+                    <dt className="col-sm-3"><p className="text-start">Directors</p></dt>
+                    <dd className="col-sm-9"><p className="text-start">{movie.directors}</p></dd>
+                    <dt className="col-sm-3"><p className="text-start">Genres</p></dt>
+                    <dd className="col-sm-9"><p className="text-start">{movie.genres}</p></dd>
+                    <dt className="col-sm-3"><p className="text-start">IMDB Rating</p></dt>
+                    <dd className="col-sm-9"><p className="text-start">{movie.imDbRating}</p></dd>
+                    <dt className="col-sm-3"><p className="text-start">Release Date</p></dt>
+                    <dd className="col-sm-9"><p className="text-start">{movie.releaseDate}</p></dd>
+                    <dt className="col-sm-3"><p className="text-start">Run Time</p></dt>
+                    <dd className="col-sm-9"><p className="text-start">{movie.runtimeStr}</p></dd>
+                    <dt className="col-sm-3"><p className="text-start">Stars</p></dt>
+                    <dd className="col-sm-9"><p className="text-start">{movie.stars}</p></dd>
+                    <dt className="col-sm-3"><p className="text-start">Awards</p></dt>
+                    <dd className="col-sm-9"><p className="text-start">{movie.awards}</p></dd>
                 </dl>
             </div>
         </div>

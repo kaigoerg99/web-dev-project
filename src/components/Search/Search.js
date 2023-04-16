@@ -28,7 +28,7 @@ const Search = () => {
                 {results.map((result) => {
                     return (
                         <div className="col">
-                            <div className="card m-2" style={{"width": "300px", "height": "450px"}}>
+                            <div className="card m-2" style={{"width": "300px", "height": "480px"}}>
                                 <img className="card-img-top" src={result.image} alt="" width={300} height={300}/>
                                 <div className="card-body">
                                     <h5 className="card-title">{result.title}</h5>
