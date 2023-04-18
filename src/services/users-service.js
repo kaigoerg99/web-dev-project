@@ -8,7 +8,6 @@ const api = axios.create({
 
 export const register = async (user) => {
     const response = await api.post(`${USERS_REST_API_URL}/register`, user);
-
     return response.data;
 };
 
