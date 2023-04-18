@@ -6,6 +6,7 @@ import Home from './components/Home/Home';
 import Search from './components/Search/Search';
 import NoResult from './components/Search/NoResult';
 import Details from './components/Details/Details';
+import Register from './components/Register/Register';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path='/search/:searchTerm' element={<Search/>}/>
           <Route path='/search' element={<NoResult/>}/>
           <Route path='/details/:id' element={<Details/>}/>
+          <Route path='/register' element={<Register/>}/>
         </Routes>
         
       </div>

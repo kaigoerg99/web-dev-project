@@ -23,7 +23,7 @@ function Navbar() {
 
     return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light pv-2 px-4 d-flex flex-row justify-content-between">
-        <Link to="/" className="navbar-brand" style={{'font-size': '50px'}}>
+        <Link to="/" className="navbar-brand" style={{'fontSize': '50px'}}>
             <i className="bi bi-film me-2" ></i>
             <span className="navbar-text text-dark">MOVIES.COM</span>
         </Link>
@@ -39,6 +39,7 @@ function Navbar() {
             <NavbarLink to="/" name="Home" icon="bi bi-house-fill"/>
             <NavbarLink to="/favorites" name="Favorites" icon="bi bi-bookmark-plus-fill"/>
             <NavbarLink to="/profile" name="Profile" icon="bi bi-person-circle"/>
+            <NavbarLink to="/register" name="Register" icon="bi bi-clipboard-plus-fill"/>
         </div>
 
     </nav>
