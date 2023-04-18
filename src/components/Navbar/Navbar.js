@@ -12,10 +12,6 @@ function Navbar() {
     const navigate = useNavigate();
     const [search, setSearch] = useState(searchTerm);
 
-    useEffect(()=>{
-        console.log(currentUser);
-    });
-
     useEffect(() => {
         if (searchTerm) {
             setSearch(searchTerm);

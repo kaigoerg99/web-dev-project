@@ -18,7 +18,7 @@ const Register = () => {
 
     return (
         <div className="container">
-            <form className="w-50 ">
+            <div className="w-50 ">
             <div className="form-group row">
                     <label className="col-sm-2 col-form-label">Email</label>
                     <div className="col-sm-10">
@@ -59,7 +59,7 @@ const Register = () => {
                 <button onClick={register} className="btn btn-primary">
                     Register
                 </button>
-            </form>
+            </div>
         </div>
     )
 }

@@ -11,8 +11,8 @@ const Login = () => {
 
     const login = async () => {
         try {
-            await dispatch(loginThunk({username, password}));
-            //navigate("/profile");
+            dispatch(loginThunk({username, password}));
+            navigate("/profile");
         } catch (e) {
             alert(e);
         }
@@ -20,7 +20,7 @@ const Login = () => {
 
     return (
         <div className="container">
-            <form className="w-50 ">
+            <div className="w-50 ">
                 <div className="form-group row">
                     <label className="col-sm-2 col-form-label">Username</label>
                     <div className="col-sm-10">
@@ -36,7 +36,7 @@ const Login = () => {
                 <button onClick={login} className="btn btn-primary">
                     Login
                 </button>
-            </form>
+            </div>
         </div>
     )
 }

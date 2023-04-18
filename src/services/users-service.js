@@ -11,9 +11,13 @@ export const register = async (user) => {
     return response.data;
 };
 
-export const login = async ({username, password}) => {
-    const response = await api.post(`${USERS_REST_API_URL}/login`, {username, password});
-    return response.data;
+export const login = async ({ username, password }) => {
+    const response = await api.post(`${USERS_REST_API_URL}/login`, {
+        username,
+        password,
+    });
+    const user = response.data;
+    return user;
 };
 
 export const profile = async () => {
