@@ -7,6 +7,7 @@ const Register = () => {
     const [user, setUser] = useState({
         username: "",
         password: "",
+        email: "",
         role: 'viewer',
     });
 
@@ -17,7 +18,13 @@ const Register = () => {
 
     return (
         <div className="container">
-            <form className="w-50 ">
+            <div className="w-50 ">
+            <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">Email</label>
+                    <div className="col-sm-10">
+                        <input type="email" className="form-control" placeholder="Enter email" value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })}/>
+                    </div>
+                </div>
                 <div className="form-group row">
                     <label className="col-sm-2 col-form-label">Username</label>
                     <div className="col-sm-10">
@@ -52,7 +59,7 @@ const Register = () => {
                 <button onClick={register} className="btn btn-primary">
                     Register
                 </button>
-            </form>
+            </div>
         </div>
     )
 }

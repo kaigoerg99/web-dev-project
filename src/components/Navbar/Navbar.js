@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import {Link, useParams} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import NavbarLink from "./Navbar-link";
+import { logoutThunk } from "../../services/users-thunks";
 
 function Navbar() {
+    const dispatch = useDispatch();
+    const { currentUser } = useSelector((state) => state.users);
     const { searchTerm } = useParams();
     const navigate = useNavigate();
     const [search, setSearch] = useState(searchTerm);
@@ -37,8 +41,17 @@ function Navbar() {
         
         <div className="d-flex flex-row" >
             <NavbarLink to="/" name="Home" icon="bi bi-house-fill"/>
-            <NavbarLink to="/login" name="Profile" icon="bi bi-person-circle"/>
-            <NavbarLink to="/register" name="Register" icon="bi bi-clipboard-plus-fill"/>
+            {currentUser ?
+                <>
+                <NavbarLink to="/profile" name="Profile" icon="bi bi-person-circle"/>
+                <button type="button" className="btn btn-primary" onClick={()=>dispatch(logoutThunk())}>logout</button>
+                </>
+                : 
+                <>
+                <NavbarLink to="/login" name="Sign in" icon="bi bi-person-circle"/>
+                <NavbarLink to="/register" name="Register" icon="bi bi-clipboard-plus-fill"/>
+                </>
+            }
         </div>
 
     </nav>
