@@ -15,3 +15,10 @@ export const getMovie = async (id) => {
     );
     return res;
 }
+
+export const popularMoviesAPI = async () => {
+    const res = await axios.get(
+        `${API}/MostPopularMovies/${API_KEY}`
+    );
+    return res;
+}
