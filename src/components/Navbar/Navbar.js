@@ -37,8 +37,7 @@ function Navbar() {
         
         <div className="d-flex flex-row" >
             <NavbarLink to="/" name="Home" icon="bi bi-house-fill"/>
-            <NavbarLink to="/favorites" name="Favorites" icon="bi bi-bookmark-plus-fill"/>
-            <NavbarLink to="/profile" name="Profile" icon="bi bi-person-circle"/>
+            <NavbarLink to="/login" name="Profile" icon="bi bi-person-circle"/>
             <NavbarLink to="/register" name="Register" icon="bi bi-clipboard-plus-fill"/>
         </div>
 
