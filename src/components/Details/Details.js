@@ -8,11 +8,11 @@ const Details = () => {
 
     useEffect(() => {
         if (id) {
-            getMoviData();
+            getMovieData();
         }
     }, [id]);
 
-    const getMoviData = async () => {
+    const getMovieData = async () => {
         const res = await getMovie(id);
         setMovie(res.data);
     }

@@ -1,21 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { popularMoviesAPI, inTheatersAPI } from "../../imdb/service";
+import { useDispatch, useSelector } from "react-redux";
+import { likeMovieThunk } from "../../services/likes-thunks";
 
 
 const Home = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [popularMovies, setPopularMovies] = useState([]);
     const [moviesInTheaters, setMoviesInTheaters] = useState([]);
+    const {likes} = useSelector((state) => state.likes);
+    const { currentUser } = useSelector((state) => state.users);
 
     useEffect(() => {
-    const fetchData = async () => {
-        // const popMovies = await getPopularMovies();
-        // setPopularMovies(popMovies);
-        // const moviesInTheater = await getMoviesInTheater();
-        // setMoviesInTheaters(moviesInTheater);
-    };
-    fetchData();
+        fetchCurrentMovies();
     }, []);
+
+    const fetchCurrentMovies = async () => {
+        const popMovies = await getPopularMovies();
+        setPopularMovies(popMovies);
+        const moviesInTheater = await getMoviesInTheater();
+        setMoviesInTheaters(moviesInTheater);
+    };
 
     const getPopularMovies = async () => {
         const res = await popularMoviesAPI();
@@ -32,8 +39,21 @@ const Home = () => {
         return res.data.items;
     };
 
+    const onLike = (result) => {
+        if (currentUser) {
+            dispatch(likeMovieThunk({name: result.title, movieId: result.id}));
+        } else {
+            navigate('/login');
+        }
+    }
+
     return (
         <>
+            {
+                currentUser && likes && <>
+                    
+                </>
+            }
             <p className="lead">Most Popular Current Movies</p>
             <div className="table-responsive">
                 <table className="table">
@@ -48,6 +68,12 @@ const Home = () => {
                                     <h5 className="card-title">{result.title}</h5>
                                     <p className="card-text">{result.description}</p>
                                     <Link className="card-link" to={`/details/${result.id}`}>View details</Link>
+                                    <br></br>
+                                    {(likes.filter(movie => movie.movieId === result.id).length > 0) ?
+                                        <i className="bi bi-heart-fill"></i>
+                                        :
+                                        <i className="bi bi-heart" onClick={() => onLike(result)}></i>
+                                    }
                                 </div>
                             </div>
                         </td>
@@ -71,6 +97,12 @@ const Home = () => {
                                     <h5 className="card-title">{result.title}</h5>
                                     <p className="card-text">{result.description}</p>
                                     <Link className="card-link" to={`/details/${result.id}`}>View details</Link>
+                                    <br></br>
+                                    {(likes.filter(movie => movie.movieId === result.id).length > 0) ?
+                                        <i className="bi bi-heart-fill"></i>
+                                        :
+                                        <i className="bi bi-heart" onClick={() => onLike(result)}></i>
+                                    }
                                 </div>
                             </div>
                         </td>
