@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { likeMovie, searchMovie } from "../../imdb/service";
-import { useSelector } from "react-redux";
+import { searchMovie } from "../../imdb/service";
+import { useDispatch, useSelector } from "react-redux";
+import { likeMovieThunk } from "../../services/likes-thunks";
 
 const Search = () => {
     const { searchTerm } = useParams();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const { currentUser } = useSelector((state) => state.users);
+    const {likes} = useSelector((state) => state.likes);
     const [results, setResults] = useState([]);
 
     useEffect(() => {
@@ -25,7 +28,7 @@ const Search = () => {
 
     const onLike = (result) => {
         if (currentUser) {
-            likeMovie({name: result.title, movieId: result.id});
+            dispatch(likeMovieThunk({name: result.title, movieId: result.id}));
         } else {
             navigate('/login');
         }
@@ -45,7 +48,11 @@ const Search = () => {
                                     <p className="card-text">{result.description}</p>
                                     <Link className="card-link" to={`/details/${result.id}`}>View details</Link>
                                     <br></br>
-                                    <i className="bi bi-heart" onClick={() => onLike(result)}></i>
+                                    {(likes.filter(movie => movie.movieId === result.id).length > 0) ?
+                                        <i className="bi bi-heart-fill"></i>
+                                        :
+                                        <i className="bi bi-heart" onClick={() => onLike(result)}></i>
+                                    }
                                 </div>
                             </div>
                         </div>
