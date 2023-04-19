@@ -14,7 +14,7 @@ const Home = () => {
     const { currentUser } = useSelector((state) => state.users);
 
     useEffect(() => {
-        fetchCurrentMovies();
+        //fetchCurrentMovies();
     }, []);
 
     const fetchCurrentMovies = async () => {
