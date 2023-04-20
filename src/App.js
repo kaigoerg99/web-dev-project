@@ -11,6 +11,7 @@ import NoResult from './components/Search/NoResult';
 import Details from './components/Details/Details';
 import Register from './components/Register/Register';
 import Login from './components/Login/Login';
+import Review from './components/Review/Review';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route path='/details/:id' element={<Details/>}/>
               <Route path='/register' element={<Register/>}/>
               <Route path='/login' element={<Login/>}/>
+              <Route path='/review/:id/:title' element={<Review/>}/>
             </Routes>
           </BrowserRouter>
         </CurrentUserContext>

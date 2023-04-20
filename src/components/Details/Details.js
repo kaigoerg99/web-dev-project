@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { getMovie } from "../../imdb/service";
+import { useSelector } from "react-redux";
 
 const Details = () => {
+    const navigate = useNavigate();
     const { id } = useParams();
     const [movie, setMovie] = useState({});
+    const { currentUser } = useSelector((state) => state.users);
 
     useEffect(() => {
         if (id) {
@@ -16,11 +19,16 @@ const Details = () => {
         const res = await getMovie(id);
         setMovie(res.data);
     }
+
+    const submitReview = () => {
+        navigate(`/review/${id}/${movie.title}`);
+    }
+
     return (
         <div className="container">
             <h1 className="display-4">{movie.fullTitle}</h1>
             <div className="my-5"><h6 className="text-start">{movie.plot}</h6></div>
-            <div className="row">
+            <div className="row mb-3">
                 <div className="col">
                     <img alt="" src={movie.image} style={{"maxWidth": 400}}/>
                 </div>
@@ -43,6 +51,9 @@ const Details = () => {
                     <dd className="col-sm-9"><p className="text-start">{movie.awards}</p></dd>
                 </dl>
             </div>
+            {
+                currentUser && currentUser.role === 'critic' && <button type="button" className="btn btn-primary" onClick={submitReview}>Review Movie</button>
+            } 
         </div>
     )
 }

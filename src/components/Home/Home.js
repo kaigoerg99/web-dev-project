@@ -69,6 +69,11 @@ const Home = () => {
                     <p className="lead">Most Recent Like: {recentLike}</p>
                 </>
             }
+            {
+                currentUser && currentUser.role === 'critic' && <>
+                    <p className="lead">Most Recent Movie Reviewed: </p>
+                </>
+            }
             <p className="lead">Most Popular Current Movies</p>
             <div className="table-responsive">
                 <table className="table">

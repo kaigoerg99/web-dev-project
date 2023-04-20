@@ -14,4 +14,9 @@ export const likeMovie = async (movie) => {
 export const getMovie = async (movieId) => {
     const response = await api.get(`${MOVIE_API}/${movieId}`);
     return response.data;
+};
+
+export const reviewMovie = async ({movie, review}) => {
+    const res = await api.post(`${MOVIE_API}/${movie.movieId}/review`, {movie, review});
+    return res.data;
 }
