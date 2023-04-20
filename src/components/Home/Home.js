@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { popularMoviesAPI, inTheatersAPI } from "../../imdb/service";
 import { useDispatch, useSelector } from "react-redux";
 import { likeMovieThunk } from "../../services/likes-thunks";
+import { getMovie } from "../../services/likes-service";
 
 
 const Home = () => {
@@ -10,12 +11,20 @@ const Home = () => {
     const navigate = useNavigate();
     const [popularMovies, setPopularMovies] = useState([]);
     const [moviesInTheaters, setMoviesInTheaters] = useState([]);
+    const [recentLike, setRecentLike] = useState('');
     const {likes} = useSelector((state) => state.likes);
     const { currentUser } = useSelector((state) => state.users);
 
     useEffect(() => {
         //fetchCurrentMovies();
     }, []);
+
+    useEffect(() => {
+        if (currentUser && likes.length > 0 && currentUser.role === 'viewer') {
+            const lastMovieId = likes.slice(-1)[0].movieId;
+            retrieveRecentLike(lastMovieId);
+        }
+    }, [currentUser, likes]);
 
     const fetchCurrentMovies = async () => {
         const popMovies = await getPopularMovies();
@@ -47,11 +56,17 @@ const Home = () => {
         }
     }
 
+    const retrieveRecentLike = async (movieId) => {
+        const res = await getMovie(movieId);
+        setRecentLike(res.name);
+        return res.name;
+    }
+
     return (
         <>
             {
-                currentUser && likes && <>
-                    
+                currentUser && likes.length > 0 && recentLike && currentUser.role === 'viewer' && <>
+                    <p className="lead">Most Recent Like: {recentLike}</p>
                 </>
             }
             <p className="lead">Most Popular Current Movies</p>

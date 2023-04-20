@@ -10,3 +10,8 @@ export const likeMovie = async (movie) => {
     const response = await api.post(`${MOVIE_API}/${movie.movieId}/likes`, movie);
     return response.data;
 };
+
+export const getMovie = async (movieId) => {
+    const response = await api.get(`${MOVIE_API}/${movieId}`);
+    return response.data;
+}
