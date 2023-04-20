@@ -23,7 +23,7 @@ function Navbar() {
             navigate(`/search/${search}`);
             setSearch('')
         }
-    }
+    };
 
     return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light pv-2 px-4 d-flex flex-row justify-content-between">

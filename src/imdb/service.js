@@ -1,31 +1,32 @@
 import axios from "axios";
-export const API = 'https://imdb-api.com/en/API';
-export const API_KEY = 'k_ssytjabd';
+export const IMDB_API = 'https://imdb-api.com/en/API';
+export const MOVIE_API = "http://localhost:4000/api/movies";
+export const API_KEY = 'k_3ugpx59m';
 
 export const searchMovie = async (searchTerm) => {
     const res = await axios.get(
-        `${API}/SearchMovie/${API_KEY}/${searchTerm}`
+        `${IMDB_API}/SearchMovie/${API_KEY}/${searchTerm}`
     );
     return res;
 };
 
 export const getMovie = async (id) => {
     const res = await axios.get(
-        `${API}/Title/${API_KEY}/${id}`
+        `${IMDB_API}/Title/${API_KEY}/${id}`
     );
     return res;
 }
 
 export const popularMoviesAPI = async () => {
     const res = await axios.get(
-        `${API}/MostPopularMovies/${API_KEY}`
+        `${IMDB_API}/MostPopularMovies/${API_KEY}`
     );
     return res;
 }
 
 export const inTheatersAPI = async () => {
     const res = await axios.get(
-        `${API}/InTheaters/${API_KEY}`
+        `${IMDB_API}/InTheaters/${API_KEY}`
     );
     return res;
 }

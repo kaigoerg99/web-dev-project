@@ -33,3 +33,9 @@ export const updateUserThunk = createAsyncThunk(
         return user;
     }
 );
+
+export const getLikesThunk = createAsyncThunk(
+    "users/getLikes", async (user) => {
+        return await userService.getLikes(user);
+    }
+);
