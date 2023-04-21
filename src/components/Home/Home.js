@@ -11,18 +11,16 @@ const Home = () => {
     const navigate = useNavigate();
     const [popularMovies, setPopularMovies] = useState([]);
     const [moviesInTheaters, setMoviesInTheaters] = useState([]);
-    const [recentLike, setRecentLike] = useState('');
+    const [likedMovies, setLikedMovies] = useState([]);
     const {likes} = useSelector((state) => state.likes);
     const { currentUser } = useSelector((state) => state.users);
-
     useEffect(() => {
-        //fetchCurrentMovies();
+        fetchCurrentMovies();
     }, []);
 
     useEffect(() => {
         if (currentUser && likes.length > 0 && currentUser.role === 'viewer') {
-            const lastMovieId = likes.slice(-1)[0].movieId;
-            retrieveRecentLike(lastMovieId);
+            fetchLikedMovies();
         }
     }, [currentUser, likes]);
 
@@ -32,6 +30,11 @@ const Home = () => {
         const moviesInTheater = await getMoviesInTheater();
         setMoviesInTheaters(moviesInTheater);
     };
+
+    const fetchLikedMovies = async () => {
+        const movies = await getLikedMovies();
+        setLikedMovies(movies);
+    }
 
     const getPopularMovies = async () => {
         const res = await popularMoviesAPI();
@@ -50,23 +53,47 @@ const Home = () => {
 
     const onLike = (result) => {
         if (currentUser) {
+            console.log(result.id)
             dispatch(likeMovieThunk({name: result.title, movieId: result.id, image: result.image}));
         } else {
             navigate('/login');
         }
     }
 
-    const retrieveRecentLike = async (movieId) => {
-        const res = await getMovie(movieId);
-        setRecentLike(res.name);
-        return res.name;
+    const getLikedMovies = async () => {
+        const moviesIDs = likes.map((like) => like.movieId);
+        const movies = await moviesIDs.map(async (movie) => await getMovie(movie))
+        return Promise.all(movies);
     }
 
     return (
         <>
             {
-                currentUser && likes.length > 0 && recentLike && currentUser.role === 'viewer' && <>
-                    <p className="lead">Most Recent Like: {recentLike}</p>
+                currentUser && likes.length > 0 && currentUser.role === 'viewer' && <>
+                    <p className="lead">Liked Movies</p>
+                    <div className="table-responsive">
+                        <table className="table">
+                            <tbody>
+                                <tr>
+                            {likedMovies.map((result) => {
+                            return (
+                                <td>
+                                    <div className="card m-2" style={{"width": "300px", "height": "40px"}}>
+                                        <img className="card-img-top" src={result.image} alt="" width={300} height={300}/>
+                                        <div className="card-body">
+                                            <h5 className="card-title">{result.title}</h5>
+                                            <Link className="card-link" to={`/details/${result.id}`}>View details</Link>
+                                            <br></br>
+                                            <i className="bi bi-heart-fill"></i>
+                                        </div>
+                                    </div>
+                                </td>
+                            );
+                        })}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </>
             }
             {
