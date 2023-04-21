@@ -28,7 +28,7 @@ const Search = () => {
 
     const onLike = (result) => {
         if (currentUser) {
-            dispatch(likeMovieThunk({name: result.title, movieId: result.id}));
+            dispatch(likeMovieThunk({name: result.title, movieId: result.id, image: result.image}));
         } else {
             navigate('/login');
         }
@@ -41,11 +41,10 @@ const Search = () => {
                 {results.map((result) => {
                     return (
                         <div className="col">
-                            <div className="card m-2" style={{"width": "300px", "height": "480px"}}>
+                            <div className="card m-2" style={{"width": "300px", "height": "450px"}}>
                                 <img className="card-img-top" src={result.image} alt="" width={300} height={300}/>
                                 <div className="card-body">
                                     <h5 className="card-title">{result.title}</h5>
-                                    <p className="card-text">{result.description}</p>
                                     <Link className="card-link" to={`/details/${result.id}`}>View details</Link>
                                     <br></br>
                                     {(likes.filter(movie => movie.movieId === result.id).length > 0) ?
