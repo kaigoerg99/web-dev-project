@@ -2,16 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { getMovie } from "../../imdb/service";
 import { useSelector } from "react-redux";
+import { getReviewsByMovie } from "../../services/likes-service";
 
 const Details = () => {
     const navigate = useNavigate();
     const { id } = useParams();
     const [movie, setMovie] = useState({});
+    const [reviews, setReviews] = useState([]);
     const { currentUser } = useSelector((state) => state.users);
 
     useEffect(() => {
         if (id) {
             getMovieData();
+            getReviews(id);
         }
     }, [id]);
 
@@ -20,8 +23,15 @@ const Details = () => {
         setMovie(res.data);
     }
 
+    console.log(reviews);
+
+    const getReviews = async (movieId) => {
+        const res = await getReviewsByMovie(movieId);
+        setReviews(res);
+    }
+
     const submitReview = () => {
-        navigate(`/review/${id}/${movie.title}`);
+        navigate(`/review/${id}/${movie.title}`, {state: {image: movie.image}});
     }
 
     return (
@@ -54,6 +64,19 @@ const Details = () => {
             {
                 currentUser && currentUser.role === 'critic' && <button type="button" className="btn btn-primary" onClick={submitReview}>Review Movie</button>
             } 
+            <h1 className="display-5">Reviews</h1>
+            {
+            reviews.length > 0 && <div className="col">
+                    {reviews.map((review) => {
+                        return (
+                            <div className="my-2">
+                                <p>{review.review}</p>
+                                <footer class="blockquote-footer">{}review.userId</footer>
+                            </div>
+                        )
+                    })}
+            </div>
+            }
         </div>
     )
 }

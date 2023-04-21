@@ -16,7 +16,12 @@ export const getMovie = async (movieId) => {
     return response.data;
 };
 
-export const reviewMovie = async ({movie, review}) => {
-    const res = await api.post(`${MOVIE_API}/${movie.movieId}/review`, {movie, review});
+export const reviewMovie = async ({movie, review, image}) => {
+    const res = await api.post(`${MOVIE_API}/${movie.movieId}/review`, {movie, review, image});
     return res.data;
-}
+};
+
+export const getReviewsByMovie = async (movieId) => {
+    const res = await api.get(`${MOVIE_API}/getReviewsByMovie/${movieId}`);
+    return res.data;
+};

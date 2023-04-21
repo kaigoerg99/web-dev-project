@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { reviewMovie } from "../../services/likes-service";
 
 const Review = () => {
     const navigate = useNavigate();
     const { id, title } = useParams();
+    const location = useLocation();
     const [review, setReview] = useState('');
 
     const submitReview = async () => {
         if (review) {
-            await reviewMovie({movie: {name: title, movieId: id}, review});
+            await reviewMovie({movie: {name: title, movieId: id, image: location.state.image}, review});
             navigate('/profile');
         }
     };
