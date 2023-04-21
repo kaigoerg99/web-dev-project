@@ -11,7 +11,7 @@ const Review = () => {
     const submitReview = async () => {
         if (review) {
             await reviewMovie({movie: {name: title, movieId: id, image: location.state.image}, review});
-            navigate('/profile');
+            navigate(`/details/${id}`);
         }
     };
 
