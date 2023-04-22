@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {logoutThunk} from "../../services/users-thunks";
+import {logoutThunk, updateUserThunk} from "../../services/users-thunks";
 import {useNavigate, useParams} from "react-router-dom";
 import * as userService from "../../services/users-service";
 
@@ -24,6 +24,12 @@ const Profile = () => {
     const logout = async () => {
         await dispatch(logoutThunk());
         navigate("/login");
+    };
+
+    const updateEmail = async () => {
+        if (profile && currentUser && profile.email !== currentUser.email) {
+            await dispatch(updateUserThunk(profile));
+        };
     };
 
     useEffect(() => {
@@ -52,12 +58,11 @@ const Profile = () => {
                     setProfile({ ...profile, email: e.target.value });
                 }}
             />
-            <button onClick={() => {
-                //TODO: Update Email
-            }} className="btn btn-primary">
-                Update Email
-            </button>
-            <br></br>
+            <div className="my-2">
+                <button onClick={() => updateEmail()} className="btn btn-primary">
+                    Update Email
+                </button>
+            </div>
             <button onClick={() => logout()} className="btn btn-danger">
                 Logout
             </button>
