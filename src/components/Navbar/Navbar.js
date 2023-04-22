@@ -44,7 +44,6 @@ function Navbar() {
             {currentUser ?
                 <>
                 <NavbarLink to="/profile" name="Profile" icon="bi bi-person-circle"/>
-                <button type="button" className="btn btn-primary" onClick={()=>dispatch(logoutThunk())}>logout</button>
                 </>
                 : 
                 <>
