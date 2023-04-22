@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import { getMovie } from "../../imdb/service";
 import { useSelector } from "react-redux";
 import { getReviewsByMovie } from "../../services/likes-service";
-import { getUser } from "../../services/users-service";
+import {findUserById, getUser} from "../../services/users-service";
 import { Link } from "react-router-dom";
 
 const Details = () => {
@@ -34,7 +34,7 @@ const Details = () => {
     }, [reviews]);
 
     const getReviewUser = async (userId) => {
-        const res = await getUser(userId);
+        const res = await findUserById(userId);
         return res;
     };
 
@@ -54,6 +54,7 @@ const Details = () => {
 
     return (
         <div className="container">
+            <button className="btn btn-outline-dark" onClick={() => navigate(-1)}>Back</button>
             <h1 className="display-4">{movie.fullTitle}</h1>
             <div className="my-5"><h6 className="text-start">{movie.plot}</h6></div>
             <div className="row mb-3">

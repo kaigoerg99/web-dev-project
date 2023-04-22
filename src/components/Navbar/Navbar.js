@@ -27,7 +27,7 @@ function Navbar() {
 
     return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light pv-2 px-4 d-flex flex-row justify-content-between">
-        <Link to="/" className="navbar-brand" style={{'fontSize': '50px'}}>
+        <Link to="/" className="navbar-brand" style={{'fontSize': '2.5rem'}}>
             <i className="bi bi-film me-2" ></i>
             <span className="navbar-text text-dark">MOVIES.COM</span>
         </Link>

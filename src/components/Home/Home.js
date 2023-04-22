@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { popularMoviesAPI, inTheatersAPI } from "../../imdb/service";
-import { useDispatch, useSelector } from "react-redux";
-import { likeMovieThunk } from "../../services/likes-thunks";
-import { getMovie } from "../../services/likes-service";
+import React, {useEffect, useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
+import {popularMoviesAPI, inTheatersAPI} from "../../imdb/service";
+import {useDispatch, useSelector} from "react-redux";
+import {likeMovieThunk} from "../../services/likes-thunks";
+import {getMovie} from "../../services/likes-service";
 
 
 const Home = () => {
@@ -13,7 +13,7 @@ const Home = () => {
     const [moviesInTheaters, setMoviesInTheaters] = useState([]);
     const [recentLike, setRecentLike] = useState('');
     const {likes} = useSelector((state) => state.likes);
-    const { currentUser } = useSelector((state) => state.users);
+    const {currentUser} = useSelector((state) => state.users);
 
     useEffect(() => {
         //fetchCurrentMovies();
@@ -78,27 +78,34 @@ const Home = () => {
             <div className="table-responsive">
                 <table className="table">
                     <tbody>
-                        <tr>
-                    {popularMovies.map((result) => {
-                    return (
-                        <td>
-                            <div className="card m-2" style={{"width": "300px", "height": "40px"}}>
-                                <img className="card-img-top" src={result.image} alt="" width={300} height={300}/>
-                                <div className="card-body">
-                                    <h5 className="card-title">{result.title}</h5>
-                                    <Link className="card-link" to={`/details/${result.id}`}>View details</Link>
-                                    <br></br>
-                                    {(likes.filter(movie => movie.movieId === result.id).length > 0) ?
-                                        <i className="bi bi-heart-fill"></i>
-                                        :
-                                        <i className="bi bi-heart" onClick={() => onLike(result)}></i>
-                                    }
-                                </div>
-                            </div>
-                        </td>
-                    );
-                })}
-                        </tr>
+                    <tr>
+                        {popularMovies.map((result) => {
+                            return (
+                                <td>
+                                    <div className="card m-2" style={{"width": "300px", "height": "530px"}}>
+                                        <img className="card-img-top" src={result.image} alt="" width={394}
+                                             height={520}/>
+                                        <div className="card-body">
+                                            <h5 className="card-title" class="text-truncate">{result.title}</h5>
+                                            <div className="row">
+                                                <div className="col-10">
+                                                    <Link className="card-link" to={`/details/${result.id}`}>View
+                                                        details</Link>
+                                                </div>
+                                                <div className="col">
+                                                    {(likes.filter(movie => movie.movieId === result.id).length > 0) ?
+                                                        <i className="bi bi-heart-fill"></i>
+                                                        :
+                                                        <i className="bi bi-heart" onClick={() => onLike(result)}></i>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            );
+                        })}
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -106,27 +113,34 @@ const Home = () => {
             <div className="table-responsive">
                 <table className="table">
                     <tbody>
-                        <tr>
-                    {moviesInTheaters.map((result) => {
-                    return (
-                        <td>
-                            <div className="card m-2" style={{"width": "300px", "height": "450px"}}>
-                                <img className="card-img-top" src={result.image} alt="" width={300} height={300}/>
-                                <div className="card-body">
-                                    <h5 className="card-title">{result.title}</h5>
-                                    <Link className="card-link" to={`/details/${result.id}`}>View details</Link>
-                                    <br></br>
-                                    {(likes.filter(movie => movie.movieId === result.id).length > 0) ?
-                                        <i className="bi bi-heart-fill"></i>
-                                        :
-                                        <i className="bi bi-heart" onClick={() => onLike(result)}></i>
-                                    }
-                                </div>
-                            </div>
-                        </td>
-                    );
-                })}
-                        </tr>
+                    <tr>
+                        {moviesInTheaters.map((result) => {
+                            return (
+                                <td>
+                                    <div className="card m-2" style={{"width": "300px", "height": "530px"}}>
+                                        <img className="card-img-top" src={result.image} alt="" width={394}
+                                             height={520}/>
+                                        <div className="card-body">
+                                            <h5 className="card-title" class="text-truncate">{result.title}</h5>
+                                            <div className="row">
+                                                <div className="col-10">
+                                                    <Link className="card-link" to={`/details/${result.id}`}>View
+                                                        details</Link>
+                                                </div>
+                                                <div className="col">
+                                                    {(likes.filter(movie => movie.movieId === result.id).length > 0) ?
+                                                        <i className="bi bi-heart-fill"></i>
+                                                        :
+                                                        <i className="bi bi-heart" onClick={() => onLike(result)}></i>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            );
+                        })}
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -134,4 +148,4 @@ const Home = () => {
     )
 }
 
-export default Home;
+    export default Home;
