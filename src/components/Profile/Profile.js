@@ -1,61 +1,67 @@
 import {useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {logoutThunk, profileThunk} from "../../services/users-thunks";
 import {useNavigate, useParams} from "react-router-dom";
+import * as userService from "../../services/users-service";
 
 const Profile = () => {
-    const { username } = useParams();
-    const [profile, setProfile] = useState({});
+    const { userId } = useParams();
+    const { currentUser } = useSelector((state) => state.users);
+    const [ profile, setProfile] = useState({});
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     const getProfile = async () => {
-        const action = await dispatch(profileThunk());
-        setProfile(action.payload);
-    }
+        const user = await userService.findUserById(currentUser._id);
+        setProfile(user);
+    };
+
+    const getUserByUserId = async () => {
+        const user = await userService.findUserById(userId);
+        setProfile(user);
+    };
+
     const logout = async () => {
         await dispatch(logoutThunk());
         navigate("/login");
     };
+
     useEffect(() => {
-        if (username) {
-            // TODO: Change to user retrieval
-            getProfile();
-        } else {
+        if (userId) {
+            getUserByUserId();
+        } else if (currentUser) {
             getProfile();
         }
-    }, []);
+      }, [userId, currentUser]);
+
+      //TODO: Show list of reviews or likes with links
+
     return (
         <div>
-            <label>Username</label>
-            <input
-                type="text"
-                className="form-control"
-                value={profile.username}
-                onChange={(e) =>
-                    setProfile({ ...profile, username: e.target.value })
-                }
-            />
+            {profile && <>
+            <p>Username: {profile.username}</p>
+            <p>Role: {profile.role}</p>
+            </>}
+            {currentUser && !userId && profile && <>
             <label>Email</label>
             <input
                 type="text"
                 className="form-control"
                 value={profile.email}
-                onChange={(e) =>
-                    setProfile({ ...profile, email: e.target.value })
-                }
+                onChange={(e) => {
+                    setProfile({ ...profile, email: e.target.value });
+                }}
             />
-            <label>Role</label>
-            <input
-                type="text"
-                className="form-control"
-                value={profile.role}
-                onChange={(e) =>
-                    setProfile({ ...profile, profile: e.target.value })
-                }
-            />
+            <button onClick={() => {
+                //TODO: Update Email
+            }} className="btn btn-primary">
+                Update Email
+            </button>
+            <br></br>
             <button onClick={() => logout()} className="btn btn-danger">
                 Logout
             </button>
+            </>}
         </div>
     )
 }
