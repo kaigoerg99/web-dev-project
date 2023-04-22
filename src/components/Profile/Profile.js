@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {logoutThunk, profileThunk} from "../../services/users-thunks";
+import {logoutThunk} from "../../services/users-thunks";
 import {useNavigate, useParams} from "react-router-dom";
 import * as userService from "../../services/users-service";
 
