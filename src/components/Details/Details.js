@@ -11,6 +11,7 @@ const Details = () => {
     const { id } = useParams();
     const [movie, setMovie] = useState({});
     const [reviews, setReviews] = useState([]);
+    const [reviewUsers, setReviewUsers] = useState([]);
     const { currentUser } = useSelector((state) => state.users);
 
     useEffect(() => {
@@ -36,6 +37,7 @@ const Details = () => {
 
     return (
         <div className="container">
+            <button className="btn btn-outline-dark" onClick={() => navigate(-1)}>Back</button>
             <h1 className="display-4">{movie.fullTitle}</h1>
             <div className="my-5"><h6 className="text-start">{movie.plot}</h6></div>
             <div className="row mb-3">
@@ -68,6 +70,7 @@ const Details = () => {
             {
             reviews.length > 0 && <div className="col">
                     {reviews.map((review) => {
+                        const index = reviews.indexOf(review);
                         return (
                             <Link to={`/profile/${review.userId}`}><p>{review.review}</p></Link>
                         )
