@@ -117,12 +117,17 @@ const Profile = () => {
             }
 
             {(profile.role === 'critic') && <>
-                    <h1>Reviews</h1>
+                <h1>Reviews</h1>
+                {reviews.length > 0 ? <>
                     {reviews.map((review) => {
                         return (
                             <Link to={`/details/${review.movieId}`}><p>{review.review}</p></Link>
                         )
                     })}
+                </>
+                :
+                <p>No movies reviewed</p>
+                }  
             </>
             }
 

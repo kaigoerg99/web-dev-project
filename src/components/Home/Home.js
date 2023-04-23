@@ -16,7 +16,7 @@ const Home = () => {
     const {currentUser} = useSelector((state) => state.users);
 
     useEffect(() => {
-        fetchCurrentMovies();
+        //fetchCurrentMovies();
     }, []);
 
     useEffect(() => {
@@ -54,22 +54,32 @@ const Home = () => {
         } else {
             navigate('/login');
         }
-    }
+    };
 
     const retrieveRecentLike = async (movieId) => {
         const res = await getMovie(movieId);
-        setRecentLike(res.name);
-        return res.name;
-    }
+        setRecentLike(res);
+    };
 
     return (
         <>
             {
                 currentUser && likes.length > 0 && recentLike && <>
-                    <p className="lead">Your most recent like: {recentLike}</p>
+                    <h2>Most Recently Liked Movie</h2>
+                    <div className="card m-2" style={{"width": "300px", "height": "530px", "overflowY": "hidden"}}>
+                        <img className="card-img-top" src={recentLike.image} alt="" width={394} height={520}/>
+                        <div className="card-body">
+                            <h5 className="card-title" class="text-truncate">{recentLike.name}</h5>
+                            <div className="row">
+                                <div className="col-10">
+                                    <Link className="card-link" to={`/details/${recentLike.movieId}`}>View details</Link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </>
             }
-            <p className="lead">Most Popular Current Movies</p>
+            <h2>Most Popular Current Movies</h2>
             <div className="table-responsive">
                 <table className="table">
                     <tbody>
@@ -104,7 +114,7 @@ const Home = () => {
                     </tbody>
                 </table>
             </div>
-            <p className="lead">Movies in Theaters</p>
+            <h2>Movies in Theaters</h2>
             <div className="table-responsive">
                 <table className="table">
                     <tbody>
