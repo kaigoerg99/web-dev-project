@@ -13,7 +13,7 @@ const Register = () => {
 
     const register = async () => {
         await userService.register(user);
-        navigate("/profile");
+        navigate("/login");
     };
 
     return (

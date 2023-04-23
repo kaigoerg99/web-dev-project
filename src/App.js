@@ -12,6 +12,7 @@ import Details from './components/Details/Details';
 import Register from './components/Register/Register';
 import Login from './components/Login/Login';
 import Review from './components/Review/Review';
+import Profile from "./components/Profile/Profile";
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
               <Route path='/details/:id' element={<Details/>}/>
               <Route path='/register' element={<Register/>}/>
               <Route path='/login' element={<Login/>}/>
+              <Route path='/profile' element={<Profile/>}/>
+              <Route path='/profile/:userId' element={<Profile/>}/>
               <Route path='/review/:id/:title' element={<Review/>}/>
             </Routes>
           </BrowserRouter>

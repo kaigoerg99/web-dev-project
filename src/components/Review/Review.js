@@ -17,6 +17,7 @@ const Review = () => {
 
     return (
         <div className="container">
+            <button className="btn btn-outline-dark" onClick={() => navigate(-1)}>Back</button>
             <div class="form-group mb-3">
                 <p className="fs-1">Write a review for {title}</p>
                 <textarea class="form-control" placeholder="Insert Review" rows="3" value={review} onChange={(e) => setReview(e.target.value)}/>

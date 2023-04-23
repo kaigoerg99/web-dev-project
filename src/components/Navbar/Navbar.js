@@ -27,7 +27,7 @@ function Navbar() {
 
     return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light pv-2 px-4 d-flex flex-row justify-content-between">
-        <Link to="/" className="navbar-brand" style={{'fontSize': '50px'}}>
+        <Link to="/" className="navbar-brand" style={{'fontSize': '2.5rem'}}>
             <i className="bi bi-film me-2" ></i>
             <span className="navbar-text text-dark">MOVIES.COM</span>
         </Link>
@@ -44,7 +44,6 @@ function Navbar() {
             {currentUser ?
                 <>
                 <NavbarLink to="/profile" name="Profile" icon="bi bi-person-circle"/>
-                <button type="button" className="btn btn-primary" onClick={()=>dispatch(logoutThunk())}>logout</button>
                 </>
                 : 
                 <>

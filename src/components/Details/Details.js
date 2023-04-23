@@ -21,23 +21,6 @@ const Details = () => {
         }
     }, [id]);
 
-    useEffect(() => {
-        if (reviews) {
-            let newReviewUsers = [];
-            reviews.map(async (review) => {
-                const res = await getReviewUser(review.userId);
-                const username = res.username;
-                newReviewUsers.push(username);
-            });
-            setReviewUsers(newReviewUsers);
-        }
-    }, [reviews]);
-
-    const getReviewUser = async (userId) => {
-        const res = await getUser(userId);
-        return res;
-    };
-
     const getMovieData = async () => {
         const res = await getMovie(id);
         setMovie(res.data);
@@ -54,6 +37,7 @@ const Details = () => {
 
     return (
         <div className="container">
+            <button className="btn btn-outline-dark" onClick={() => navigate(-1)}>Back</button>
             <h1 className="display-4">{movie.fullTitle}</h1>
             <div className="my-5"><h6 className="text-start">{movie.plot}</h6></div>
             <div className="row mb-3">
@@ -88,10 +72,7 @@ const Details = () => {
                     {reviews.map((review) => {
                         const index = reviews.indexOf(review);
                         return (
-                            <div className="my-2">
-                                <p>{review.review}</p>
-                                <footer class="blockquote-footer"><Link to={`/profile/${review.userId}`}>{reviewUsers[index]}</Link></footer>
-                            </div>
+                            <Link to={`/profile/${review.userId}`}><p>{review.review}</p></Link>
                         )
                     })}
             </div>
