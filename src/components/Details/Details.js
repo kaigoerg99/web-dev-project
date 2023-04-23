@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import { getMovie } from "../../imdb/service";
 import { useSelector } from "react-redux";
 import { getReviewsByMovie } from "../../services/likes-service";
-import {findUserById, getUser} from "../../services/users-service";
+import { getUser } from "../../services/users-service";
 import { Link } from "react-router-dom";
 
 const Details = () => {
@@ -20,23 +20,6 @@ const Details = () => {
             getReviews(id);
         }
     }, [id]);
-
-    useEffect(() => {
-        if (reviews) {
-            let newReviewUsers = [];
-            reviews.map(async (review) => {
-                const res = await getReviewUser(review.userId);
-                const username = res.username;
-                newReviewUsers.push(username);
-            });
-            setReviewUsers(newReviewUsers);
-        }
-    }, [reviews]);
-
-    const getReviewUser = async (userId) => {
-        const res = await findUserById(userId);
-        return res;
-    };
 
     const getMovieData = async () => {
         const res = await getMovie(id);
@@ -89,10 +72,7 @@ const Details = () => {
                     {reviews.map((review) => {
                         const index = reviews.indexOf(review);
                         return (
-                            <div className="my-2">
-                                <p>{review.review}</p>
-                                <footer class="blockquote-footer"><Link to={`/profile/${review.userId}`}>{reviewUsers[index]}</Link></footer>
-                            </div>
+                            <Link to={`/profile/${review.userId}`}><p>{review.review}</p></Link>
                         )
                     })}
             </div>
