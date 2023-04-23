@@ -82,7 +82,7 @@ const Home = () => {
                     {popularMovies.map((result) => {
                     return (
                         <td>
-                            <div className="card m-2" style={{"width": "300px", "height": "40px"}}>
+                            <div className="card m-2" style={{"width": "300px", "height": "400px"}}>
                                 <img className="card-img-top" src={result.image} alt="" width={300} height={300}/>
                                 <div className="card-body">
                                     <h5 className="card-title">{result.title}</h5>

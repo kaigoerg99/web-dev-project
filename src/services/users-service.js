@@ -40,7 +40,13 @@ export const getLikes = async (user) => {
     return res.data;
 };
 
+export const findUserById = async (id) => {
+    const response = await api.get(`${USERS_REST_API_URL}/${id}`);
+    return response.data;
+  };
+  
 export const getUser = async (userId) => {
     const res = await api.get(`${USERS_REST_API_URL}/${userId}`);
     return res.data;
 };
+
