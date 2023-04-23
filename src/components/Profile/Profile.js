@@ -16,12 +16,12 @@ const Profile = () => {
     const navigate = useNavigate();
 
     const getProfile = async () => {
-        const user = await userService.findUserById(currentUser._id);
+        const user = await userService.getUser(currentUser._id);
         setProfile(user);
     };
 
     const getUserByUserId = async (userId) => {
-        const user = await userService.findUserById(userId);
+        const user = await userService.getUser(userId);
         setProfile(user);
     };
 
