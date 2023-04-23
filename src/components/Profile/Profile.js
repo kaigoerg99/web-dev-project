@@ -46,6 +46,11 @@ const Profile = () => {
         setReviews(res);
     };
 
+    const removeReview = async (reviewId) => {
+        await likesService.deleteReview(reviewId);
+        window.location.reload(false);
+    };
+
     useEffect(() => {
         if (userId) {
             getUserByUserId(userId);
@@ -121,7 +126,11 @@ const Profile = () => {
                 {reviews.length > 0 ? <>
                     {reviews.map((review) => {
                         return (
-                            <Link to={`/details/${review.movieId}`}><p>{review.review}</p></Link>
+                            <div className="d-flex justify-content-between">
+                                <Link to={`/details/${review.movieId}`}><p>{review.review}</p></Link>
+                                <i class="bi bi-trash" onClick={() => removeReview(review._id)} ></i>
+                            </div>
+                            
                         )
                     })}
                 </>

@@ -35,3 +35,8 @@ export const getReviewsByUser = async (userId) => {
     const res = await api.get(`${MOVIE_API}/getReviewsByUser/${userId}`);
     return res.data;
 };
+
+export const deleteReview = async (reviewId) => {
+    const res = await api.post(`${MOVIE_API}/deleteReview`, {reviewId});
+    return res.data;
+};
