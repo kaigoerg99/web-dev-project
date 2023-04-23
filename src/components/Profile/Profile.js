@@ -7,11 +7,11 @@ import * as likesService from "../../services/likes-service";
 
 const Profile = () => {
     const { userId } = useParams();
-    const { likes } = useSelector((state) => state.likes);
     const { currentUser } = useSelector((state) => state.users);
+    const [ newEmail, setNewEmail ] = useState();
     const [ profile, setProfile] = useState({});
-    const [ userLikes, setUserLikes] = useState([]);
     const [ likedMovies, setLikedMovies] = useState([]);
+    const [ reviews, setReviews] = useState([]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -20,7 +20,7 @@ const Profile = () => {
         setProfile(user);
     };
 
-    const getUserByUserId = async () => {
+    const getUserByUserId = async (userId) => {
         const user = await userService.findUserById(userId);
         setProfile(user);
     };
@@ -31,41 +31,38 @@ const Profile = () => {
     };
 
     const updateEmail = async () => {
-        if (profile && currentUser && profile.email !== currentUser.email) {
-            await dispatch(updateUserThunk(profile));
-        };
+        await dispatch(updateUserThunk({ ...profile, email: newEmail }));
     };
 
     const getUserLikes = async (userId) => {
         const res = await userService.getLikes(userId);
-        setUserLikes(res);
+        const movieIds = res.map(like => like.movieId);
+        const moviesData = await likesService.getMovies(movieIds);
+        setLikedMovies(moviesData);
     };
 
-    console.log(likedMovies);
+    const getReviews = async (userId) => {
+        const res = await likesService.getReviewsByUser(userId);
+        setReviews(res);
+    };
 
     useEffect(() => {
         if (userId) {
-            getUserByUserId();
-        } else if (currentUser) {
-            getProfile();
+            getUserByUserId(userId);
+            getUserLikes(userId);
+            getReviews(userId);
+        } else {
+            if (currentUser) {
+                getProfile();
+                getUserLikes(currentUser._id);
+                getReviews(currentUser._id);
+            };
         }
     }, [userId, currentUser]);
 
     useEffect(() => {
-        if (userId) {
-            getUserLikes(userId);
-        } else if (currentUser) {
-            setUserLikes(likes);
-        };
-    }, [userId, currentUser, likes]);
-
-    useEffect(() => {
-        setLikedMovies([]);
-        userLikes.map(async (like) => {
-            const res = await likesService.getMovie(like.movieId);
-            setLikedMovies(likedMovies => [...likedMovies, res]);
-        });
-    }, [userLikes]);
+        setNewEmail(profile.email);
+    }, [profile]);
 
     return (
         <div className="container">
@@ -79,9 +76,9 @@ const Profile = () => {
             <input
                 type="text"
                 className="form-control"
-                value={profile.email}
+                value={newEmail}
                 onChange={(e) => {
-                    setProfile({ ...profile, email: e.target.value });
+                    setNewEmail(e.target.value);
                 }}
             />
             <div className="mt-2">
@@ -90,6 +87,7 @@ const Profile = () => {
                 </button>
             </div>
             </>}
+
             <h1>Likes</h1>
             {(likedMovies.length > 0) ? <>
                 <div className="table-responsive">
@@ -103,7 +101,7 @@ const Profile = () => {
                                     <img className="card-img-top" src={result.image} alt="" width={300} height={300}/>
                                     <div className="card-body">
                                         <h5 className="card-title">{result.name}</h5>
-                                        <Link className="card-link" to={`/details/${result.id}`}>View details</Link>
+                                        <Link className="card-link" to={`/details/${result.movieId}`}>View details</Link>
                                     </div>
                                 </div>
                             </td>
@@ -117,6 +115,17 @@ const Profile = () => {
             :
             <p>No movies liked</p>
             }
+
+            {(profile.role === 'critic') && <>
+                    <h1>Reviews</h1>
+                    {reviews.map((review) => {
+                        return (
+                            <Link to={`/details/${review.movieId}`}><p>{review.review}</p></Link>
+                        )
+                    })}
+            </>
+            }
+
             {currentUser && !userId && <div className="my-2"><button onClick={() => logout()} className="btn btn-danger">
                 Logout
             </button></div>}
