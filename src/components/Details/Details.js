@@ -11,7 +11,6 @@ const Details = () => {
     const { id } = useParams();
     const [movie, setMovie] = useState({});
     const [reviews, setReviews] = useState([]);
-    const [reviewUsers, setReviewUsers] = useState([]);
     const { currentUser } = useSelector((state) => state.users);
 
     useEffect(() => {
@@ -20,23 +19,6 @@ const Details = () => {
             getReviews(id);
         }
     }, [id]);
-
-    useEffect(() => {
-        if (reviews) {
-            let newReviewUsers = [];
-            reviews.map(async (review) => {
-                const res = await getReviewUser(review.userId);
-                const username = res.username;
-                newReviewUsers.push(username);
-            });
-            setReviewUsers(newReviewUsers);
-        }
-    }, [reviews]);
-
-    const getReviewUser = async (userId) => {
-        const res = await getUser(userId);
-        return res;
-    };
 
     const getMovieData = async () => {
         const res = await getMovie(id);
@@ -86,12 +68,8 @@ const Details = () => {
             {
             reviews.length > 0 && <div className="col">
                     {reviews.map((review) => {
-                        const index = reviews.indexOf(review);
                         return (
-                            <div className="my-2">
-                                <p>{review.review}</p>
-                                <footer class="blockquote-footer"><Link to={`/profile/${review.userId}`}>{reviewUsers[index]}</Link></footer>
-                            </div>
+                            <Link to={`/profile/${review.userId}`}><p>{review.review}</p></Link>
                         )
                     })}
             </div>
