@@ -11,18 +11,16 @@ const Home = () => {
     const navigate = useNavigate();
     const [popularMovies, setPopularMovies] = useState([]);
     const [moviesInTheaters, setMoviesInTheaters] = useState([]);
-    const [recentLike, setRecentLike] = useState('');
+    const [likedMovies, setLikedMovies] = useState([]);
     const {likes} = useSelector((state) => state.likes);
-    const {currentUser} = useSelector((state) => state.users);
+    const { currentUser } = useSelector((state) => state.users);
 
     useEffect(() => {
-        //fetchCurrentMovies();
-    }, []);
-
-    useEffect(() => {
-        if (currentUser && likes.length > 0) {
-            const lastMovieId = likes.slice(-1)[0].movieId;
-            retrieveRecentLike(lastMovieId);
+        if (currentUser && likes.length > 0 && currentUser.role === 'viewer') {
+            fetchLikedMovies();
+            fetchCurrentMovies();
+        } else {
+            fetchCurrentMovies();
         }
     }, [currentUser, likes]);
 
@@ -32,6 +30,11 @@ const Home = () => {
         const moviesInTheater = await getMoviesInTheater();
         setMoviesInTheaters(moviesInTheater);
     };
+
+    const fetchLikedMovies = async () => {
+        const movies = await getLikedMovies();
+        setLikedMovies(movies);
+    }
 
     const getPopularMovies = async () => {
         const res = await popularMoviesAPI();
@@ -50,33 +53,54 @@ const Home = () => {
 
     const onLike = (result) => {
         if (currentUser) {
+            console.log(result.id)
             dispatch(likeMovieThunk({name: result.title, movieId: result.id, image: result.image}));
         } else {
             navigate('/login');
         }
     };
 
-    const retrieveRecentLike = async (movieId) => {
-        const res = await getMovie(movieId);
-        setRecentLike(res);
-    };
+    const getLikedMovies = async () => {
+        const moviesIDs = likes.map((like) => like.movieId);
+        const movies = await moviesIDs.map(async (movie) => await getMovie(movie))
+        return Promise.all(movies);
+    }
 
     return (
         <>
             {
-                currentUser && likes.length > 0 && recentLike && <>
-                    <h2>Most Recently Liked Movie</h2>
-                    <div className="card m-2" style={{"width": "300px", "height": "530px", "overflowY": "hidden"}}>
-                        <img className="card-img-top" src={recentLike.image} alt="" width={394} height={520}/>
-                        <div className="card-body">
-                            <h5 className="card-title" class="text-truncate">{recentLike.name}</h5>
-                            <div className="row">
-                                <div className="col-10">
-                                    <Link className="card-link" to={`/details/${recentLike.movieId}`}>View details</Link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                currentUser && likes.length > 0 && currentUser.role === 'viewer' && <>
+                <h2>Liked Movies</h2>
+                <div className="table-responsive">
+                    <table className="table">
+                        <tbody>
+                        <tr>
+                            {likedMovies.map((result) => {
+                                return (
+                                    <td>
+                                        <div className="card m-2" style={{"width": "300px", "height": "530px", "overflowY": "hidden"}}>
+                                            <img className="card-img-top" src={result.image} alt="" width={394}
+                                                height={520}/>
+                                            <div className="card-body">
+                                                <h5 className="card-title" class="text-truncate">{result.title}</h5>
+                                                <div className="row">
+                                                    <div className="col-10">
+                                                        <Link className="card-link" to={`/details/${result.movieId}`}>View
+                                                            details</Link>
+                                                    </div>
+                                                    <div className="col">
+                                                            <i className="bi bi-heart-fill"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                );
+                            })}
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
                 </>
             }
             <h2>Most Popular Current Movies</h2>
