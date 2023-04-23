@@ -16,11 +16,11 @@ const Home = () => {
     const {currentUser} = useSelector((state) => state.users);
 
     useEffect(() => {
-        //fetchCurrentMovies();
+        fetchCurrentMovies();
     }, []);
 
     useEffect(() => {
-        if (currentUser && likes.length > 0 && currentUser.role === 'viewer') {
+        if (currentUser && likes.length > 0) {
             const lastMovieId = likes.slice(-1)[0].movieId;
             retrieveRecentLike(lastMovieId);
         }
@@ -65,13 +65,8 @@ const Home = () => {
     return (
         <>
             {
-                currentUser && likes.length > 0 && recentLike && currentUser.role === 'viewer' && <>
-                    <p className="lead">Most Recent Like: {recentLike}</p>
-                </>
-            }
-            {
-                currentUser && currentUser.role === 'critic' && <>
-                    <p className="lead">Most Recent Movie Reviewed: </p>
+                currentUser && likes.length > 0 && recentLike && <>
+                    <p className="lead">Your most recent like: {recentLike}</p>
                 </>
             }
             <p className="lead">Most Popular Current Movies</p>
@@ -82,7 +77,7 @@ const Home = () => {
                         {popularMovies.map((result) => {
                             return (
                                 <td>
-                                    <div className="card m-2" style={{"width": "300px", "height": "530px"}}>
+                                    <div className="card m-2" style={{"width": "300px", "height": "530px", "overflowY": "hidden"}}>
                                         <img className="card-img-top" src={result.image} alt="" width={394}
                                              height={520}/>
                                         <div className="card-body">
@@ -117,7 +112,7 @@ const Home = () => {
                         {moviesInTheaters.map((result) => {
                             return (
                                 <td>
-                                    <div className="card m-2" style={{"width": "300px", "height": "530px"}}>
+                                    <div className="card m-2" style={{"width": "300px", "height": "530px", "overflowY": "hidden"}}>
                                         <img className="card-img-top" src={result.image} alt="" width={394}
                                              height={520}/>
                                         <div className="card-body">

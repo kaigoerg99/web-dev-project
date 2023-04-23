@@ -1,7 +1,7 @@
 import axios from "axios";
 export const IMDB_API = 'https://imdb-api.com/en/API';
 export const MOVIE_API = "http://localhost:4000/api/movies";
-export const API_KEY = 'k_3cnqqgzp';
+export const API_KEY = 'k_3ugpx59m';
 
 export const searchMovie = async (searchTerm) => {
     const res = await axios.get(
