@@ -82,7 +82,7 @@ const Home = () => {
                                             <img className="card-img-top" src={result.image} alt="" width={394}
                                                 height={520}/>
                                             <div className="card-body">
-                                                <h5 className="card-title" class="text-truncate">{result.title}</h5>
+                                                <h5 className="card-title" class="text-truncate">{result.name}</h5>
                                                 <div className="row">
                                                     <div className="col-10">
                                                         <Link className="card-link" to={`/details/${result.movieId}`}>View
