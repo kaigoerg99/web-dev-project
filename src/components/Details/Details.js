@@ -3,12 +3,15 @@ import { useNavigate, useParams } from "react-router";
 import { getMovie } from "../../imdb/service";
 import { useSelector } from "react-redux";
 import { getReviewsByMovie } from "../../services/likes-service";
+import { getUser } from "../../services/users-service";
+import { Link } from "react-router-dom";
 
 const Details = () => {
     const navigate = useNavigate();
     const { id } = useParams();
     const [movie, setMovie] = useState({});
     const [reviews, setReviews] = useState([]);
+    const [reviewUsers, setReviewUsers] = useState([]);
     const { currentUser } = useSelector((state) => state.users);
 
     useEffect(() => {
@@ -17,6 +20,23 @@ const Details = () => {
             getReviews(id);
         }
     }, [id]);
+
+    useEffect(() => {
+        if (reviews) {
+            let newReviewUsers = [];
+            reviews.map(async (review) => {
+                const res = await getReviewUser(review.userId);
+                const username = res.username;
+                newReviewUsers.push(username);
+            });
+            setReviewUsers(newReviewUsers);
+        }
+    }, [reviews]);
+
+    const getReviewUser = async (userId) => {
+        const res = await getUser(userId);
+        return res;
+    };
 
     const getMovieData = async () => {
         const res = await getMovie(id);
@@ -60,16 +80,17 @@ const Details = () => {
                 </dl>
             </div>
             {
-                currentUser && currentUser.role === 'critic' && <button type="button" className="btn btn-primary" onClick={submitReview}>Review Movie</button>
+                currentUser && currentUser.role === 'critic' && <button type="button" className="btn btn-primary" onClick={submitReview}>Write a review</button>
             } 
             <h1 className="display-5">Reviews</h1>
             {
             reviews.length > 0 && <div className="col">
                     {reviews.map((review) => {
+                        const index = reviews.indexOf(review);
                         return (
                             <div className="my-2">
                                 <p>{review.review}</p>
-                                <footer class="blockquote-footer">{}review.userId</footer>
+                                <footer class="blockquote-footer"><Link to={`/profile/${review.userId}`}>{reviewUsers[index]}</Link></footer>
                             </div>
                         )
                     })}
