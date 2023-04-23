@@ -19,7 +19,7 @@ const Home = () => {
     }, []);
 
     useEffect(() => {
-        if (currentUser && likes.length > 0 && currentUser.role === 'viewer') {
+        if (currentUser && likes.length > 0 && (currentUser.role === 'viewer' || currentUser.role === 'critic')) {
             fetchLikedMovies();
             fetchCurrentMovies();
         } else {
