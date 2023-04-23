@@ -14,6 +14,9 @@ const Home = () => {
     const [likedMovies, setLikedMovies] = useState([]);
     const {likes} = useSelector((state) => state.likes);
     const { currentUser } = useSelector((state) => state.users);
+    useEffect(() => {
+
+    }, []);
 
     useEffect(() => {
         if (currentUser && likes.length > 0 && currentUser.role === 'viewer') {
@@ -69,7 +72,7 @@ const Home = () => {
     return (
         <>
             {
-                currentUser && likes.length > 0 && currentUser.role === 'viewer' && <>
+                currentUser && likes.length > 0 && (currentUser.role === 'viewer' || currentUser.role === 'critic') && <>
                 <h2>Liked Movies</h2>
                 <div className="table-responsive">
                     <table className="table">
