@@ -37,9 +37,9 @@ const Details = () => {
 
     return (
         <div className="container">
-            <button className="btn btn-outline-dark" onClick={() => navigate(-1)}>Back</button>
+            <button className="btn btn-outline-dark mt-2" onClick={() => navigate(-1)}>Back</button>
             <h1 className="display-4">{movie.fullTitle}</h1>
-            <div className="my-5"><h6 className="text-start">{movie.plot}</h6></div>
+            <div className="my-4"><h6 className="text-start">{movie.plot}</h6></div>
             <div className="row mb-3">
                 <div className="col">
                     <img alt="" src={movie.image} style={{"maxWidth": 400}}/>

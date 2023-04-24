@@ -70,7 +70,7 @@ const Profile = () => {
     }, [profile]);
 
     return (
-        <div className="container">
+        <div className="container mt-1">
             <h1>Information</h1>
             {profile && <>
             <p>Username: {profile.username}</p>
@@ -80,7 +80,7 @@ const Profile = () => {
             <label>Email</label>
             <input
                 type="text"
-                className="form-control"
+                className="form-control w-50"
                 value={newEmail}
                 onChange={(e) => {
                     setNewEmail(e.target.value);
@@ -91,6 +91,7 @@ const Profile = () => {
                     Update Email
                 </button>
             </div>
+
             </>}
 
             <h1>Likes</h1>
@@ -130,13 +131,13 @@ const Profile = () => {
                                 <Link to={`/details/${review.movieId}`}><p>{review.review}</p></Link>
                                 <i class="bi bi-trash" onClick={() => removeReview(review._id)} ></i>
                             </div>
-                            
+
                         )
                     })}
                 </>
                 :
                 <p>No movies reviewed</p>
-                }  
+                }
             </>
             }
 
