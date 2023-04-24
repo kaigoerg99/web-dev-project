@@ -32,7 +32,8 @@ const Home = () => {
     };
 
     const fetchLikedMovies = async () => {
-        const movies = await getLikedMovies();
+        let movies = await getLikedMovies();
+        movies = movies.reverse();
         setLikedMovies(movies);
     }
 
@@ -82,7 +83,7 @@ const Home = () => {
                                             <img className="card-img-top" src={result.image} alt="" width={394}
                                                 height={520}/>
                                             <div className="card-body">
-                                                <h5 className="card-title text-truncate">{result.name}</h5>
+                                                <h5 className="card-title" class="text-truncate">{result.name}</h5>
                                                 <div className="row">
                                                     <div className="col-10">
                                                         <Link className="card-link" to={`/details/${result.movieId}`}>View
@@ -115,7 +116,7 @@ const Home = () => {
                                         <img className="card-img-top" src={result.image} alt="" width={394}
                                              height={520}/>
                                         <div className="card-body">
-                                            <h5 className="card-title text-truncate">{result.title}</h5>
+                                            <h5 className="card-title" class="text-truncate">{result.title}</h5>
                                             <div className="row">
                                                 <div className="col-10">
                                                     <Link className="card-link" to={`/details/${result.id}`}>View
@@ -150,7 +151,7 @@ const Home = () => {
                                         <img className="card-img-top" src={result.image} alt="" width={394}
                                              height={520}/>
                                         <div className="card-body">
-                                            <h5 className="card-title text-truncate">{result.title}</h5>
+                                            <h5 className="card-title" class="text-truncate">{result.title}</h5>
                                             <div className="row">
                                                 <div className="col-10">
                                                     <Link className="card-link" to={`/details/${result.id}`}>View
