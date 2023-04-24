@@ -19,25 +19,25 @@ const Register = () => {
     return (
         <div className="container">
             <div className="w-50 ">
-            <div className="form-group row">
+            <div className="form-group row mt-3">
                     <label className="col-sm-2 col-form-label">Email</label>
                     <div className="col-sm-10">
                         <input type="email" className="form-control" placeholder="Enter email" value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })}/>
                     </div>
                 </div>
-                <div className="form-group row">
+                <div className="form-group row mt-2">
                     <label className="col-sm-2 col-form-label">Username</label>
                     <div className="col-sm-10">
                         <input type="text" className="form-control" placeholder="Enter username" value={user.username} onChange={(e) => setUser({ ...user, username: e.target.value })}/>
                     </div>
                 </div>
-                <div className="form-group row">
+                <div className="form-group row mt-2">
                     <label className="col-sm-2 col-form-label">Password</label>
                     <div className="col-sm-10">
                         <input type="password" className="form-control" placeholder="Enter password" value={user.password} onChange={(e) => setUser({ ...user, password: e.target.value })}/>
                     </div>
                 </div>
-                <div className="form-group">
+                <div className="form-group mt-2">
                     <div className="row">
                         <legend className="col-form-label col-sm-2 pt-0">Role</legend>
                         <div className="col-sm-10">
@@ -56,7 +56,7 @@ const Register = () => {
                         </div>
                     </div>
                 </div>
-                <button onClick={register} className="btn btn-primary">
+                <button onClick={register} className="btn btn-primary mt-2">
                     Register
                 </button>
             </div>

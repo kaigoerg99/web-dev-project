@@ -26,7 +26,7 @@ function Navbar() {
     };
 
     return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light pv-2 px-4 d-flex flex-row justify-content-between">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light d-flex flex-row justify-content-between">
         <Link to="/" className="navbar-brand" style={{'fontSize': '2.5rem'}}>
             <i className="bi bi-film me-2" ></i>
             <span className="navbar-text text-dark">MOVIES.COM</span>
@@ -39,7 +39,7 @@ function Navbar() {
             </button>
         </div>
         
-        <div className="d-flex flex-row" >
+        <div className="d-flex flex-row flex-fill justify-content-center" style={{'width': '30%'}}>
             <NavbarLink to="/" name="Home" icon="bi bi-house-fill"/>
             {currentUser ?
                 <>
